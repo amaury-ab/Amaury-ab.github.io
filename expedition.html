@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Expéditions & Parcours | Amaury Asselos</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        #map-world, #map-france { height: 400px; width: 100%; margin-bottom: 30px; border: 2px dashed #333; }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="portfolio.html">Collection</a></li>
+            <li><a href="expedition.html" class="active">Expéditions</a></li>
+            <li><a href="ingenierie.html">Ingénierie</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>Carnet de Route</h1>
+
+        <section>
+            <h2>🌍 Exploration Globale</h2>
+            <p>Inde, Brésil, USA, Asie du Sud-Est... Chaque voyage a forgé ma capacité d'adaptation.</p>
+            <div id="map-world"></div>
+        </section>
+
+        <section>
+            <h2>🇫🇷 Mon Tour de France (Formation & Pro)</h2>
+            <p>De la Bretagne à l'Alsace, en passant par le Nord et le Pays Basque.</p>
+            <div id="map-france"></div>
+        </section>
+    </main>
+
+    <script>
+        // 1. CARTE MONDE
+        var mapWorld = L.map('map-world').setView([20, 0], 2);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; OpenStreetMap'
+        }).addTo(mapWorld);
+
+        // Liste des pays visités (Coordonnées approximatives)
+        var trips = [
+            ["Inde", 20.59, 78.96], ["Brésil", -14.23, -51.92], ["USA", 37.09, -95.71],
+            ["Vietnam", 14.05, 108.27], ["Thaïlande", 15.87, 100.99], ["Chine", 35.86, 104.19],
+            ["Portugal", 39.39, -8.22], ["Irlande", 53.14, -7.69], ["Royaume-Uni", 55.37, -3.43],
+            ["Suriname", 3.91, -56.02], ["Guyane", 3.93, -53.12], ["Italie", 41.87, 12.56]
+        ];
+
+        trips.forEach(function(item) {
+            L.marker([item[1], item[2]]).addTo(mapWorld).bindPopup(item[0]);
+        });
+
+        // 2. CARTE FRANCE
+        var mapFrance = L.map('map-france').setView([46.603354, 1.888334], 5);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; OpenStreetMap'
+        }).addTo(mapFrance);
+
+        // Lieux de formation et travail
+        var places = [
+            ["<b>Lorient</b><br>Licence Physique & CUPGE", 47.748, -3.370],
+            ["<b>Strasbourg</b><br>Stage Observatoire Astronomique", 48.573, 7.752],
+            ["<b>Roubaix (ENSAIT)</b><br>École d'Ingénieur Textile", 50.692, 3.174],
+            ["<b>Hendaye (Decathlon)</b><br>Ingénieur Composant", 43.358, -1.774],
+            ["<b>Vannes</b><br>Lycée & Origines", 47.658, -2.760]
+        ];
+
+        places.forEach(function(item) {
+            L.marker([item[1], item[2]]).addTo(mapFrance).bindPopup(item[0]);
+        });
+    </script>
+</body>
+</html>
