@@ -1,0 +1,27 @@
+body {
+    background-color: #FDFCF0; /* Couleur lin naturel */
+    font-family: 'Courier New', Courier, monospace; /* Look machine à écrire / technique */
+    color: #333;
+    line-height: 1.6;
+    padding: 50px;
+}
+
+header {
+    border-bottom: 2px dashed #004B9A; /* Couture bleue style Decathlon */
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+}
+
+.card {
+    border: 1px solid #ccc;
+    border-style: none none none dashed; /* Couture latérale */
+    padding-left: 20px;
+    margin-bottom: 25px;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+h2 {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #555;
+}
