@@ -189,18 +189,23 @@ nav a.active {
 /* --- IMAGES & GALERIE --- */
 
 /* Photo de profil ronde */
+
+/* Correction pour centrer parfaitement la photo */
 .profile-container {
-    text-align: center;
-    margin-top: -30px; /* Pour remonter un peu sur le header */
+    display: flex;             /* Active le mode Flexbox */
+    justify-content: center;   /* Centre horizontalement */
+    align-items: center;       /* Centre verticalement */
+    width: 100%;               /* Prend toute la largeur */
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 
 .profile-pic {
     width: 150px;
     height: 150px;
-    border-radius: 50%; /* Ça fait le rond */
+    border-radius: 50%;
     border: 4px solid #fff;
-    object-fit: cover;
+    object-fit: cover;         /* Empêche l'image d'être écrasée */
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
