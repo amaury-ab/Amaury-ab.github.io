@@ -190,22 +190,23 @@ nav a.active {
 
 /* Photo de profil ronde */
 
-/* Correction pour centrer parfaitement la photo */
-.profile-container {
-    display: flex;             /* Active le mode Flexbox */
-    justify-content: center;   /* Centre horizontalement */
-    align-items: center;       /* Centre verticalement */
-    width: 100%;               /* Prend toute la largeur */
-    margin-top: 20px;
-    margin-bottom: 20px;
+/* On s'assure que le header centre tout son contenu */
+header {
+    text-align: center;
+    border-bottom: 2px dashed #004B9A;
+    padding-bottom: 20px;
+    margin-bottom: 40px;
 }
 
+/* La photo se centre toute seule */
 .profile-pic {
+    display: block;        /* Se comporte comme un bloc */
+    margin: 0 auto 20px;   /* 0 en haut, AUTO sur les côtés (c'est ça qui centre), 20px en bas */
     width: 150px;
     height: 150px;
     border-radius: 50%;
     border: 4px solid #fff;
-    object-fit: cover;         /* Empêche l'image d'être écrasée */
+    object-fit: cover;
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
