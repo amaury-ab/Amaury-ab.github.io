@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Surf Session | Amaury Asselos</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Style spécifique au jeu */
+        body#page-game {
+            background-color: #81d4fa; /* Bleu ciel */
+            background-image: linear-gradient(0deg, #0288d1 0%, #81d4fa 100%);
+            overflow: hidden; /* Empêche de scroller pendant qu'on joue */
+            text-align: center;
+        }
+
+        h1 { color: white; text-shadow: 2px 2px 0 #01579b; margin-top: 20px; }
+        p { color: #e1f5fe; font-weight: bold; }
+
+        canvas {
+            background: #039be5; /* Bleu océan */
+            border: 4px solid white;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            display: block;
+            margin: 20px auto;
+            cursor: none; /* Cache la souris sur le jeu */
+        }
+
+        #ui-layer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            display: none; /* Caché quand on joue */
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 20px;
+            background: #ff6f00; /* Orange Decath */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 5px 0 #c43e00;
+        }
+        button:active {
+            transform: translateY(5px);
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body id="page-game">
+
+    <nav style="background: white; border-radius: 20px; display: inline-block; padding: 10px 30px; margin-top: 10px;">
+        <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="portfolio.html">Collection</a></li>
+            <li><a href="expedition.html">Expéditions</a></li>
+            <li><a href="ingenierie.html">Ingénierie</a></li>
+            <li><a href="game.html" class="active">Jeu 🏄‍♂️</a></li>
+        </ul>
+    </nav>
+
+    <h1>🌊 HENDAYE SURF CHALLENGE 🌊</h1>
+    <p>Utilise les FLÈCHES HAUT ⬆️ et BAS ⬇️ pour esquiver les rochers !</p>
+    <p>Score : <span id="scoreDisplay">0</span></p>
+
+    <canvas id="gameCanvas" width="800" height="400"></canvas>
+
+    <div id="ui-layer">
+        <h2 style="color:white; font-size:40px; text-shadow: 2px 2px 0 #000;">PLOUF ! 💦</h2>
+        <button onclick="startGame()">REJOUER</button>
+    </div>
+
+    <script>
+        // CONFIGURATION DU JEU
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const uiLayer = document.getElementById('ui-layer');
+        const scoreSpan = document.getElementById('scoreDisplay');
+
+        let gameRunning = true;
+        let score = 0;
+        let frameCount = 0;
+        let gameSpeed = 5;
+
+        // LE SURFEUR 🏄‍♂️
+        let surfer = {
+            x: 50,
+            y: 200,
+            size: 50,
+            emoji: "🏄‍♂️"
+        };
+
+        // LES ROCHERS 🪨
+        let rocks = [];
+
+        // GESTION DES TOUCHES
+        let keys = {};
+        window.addEventListener('keydown', function(e) { keys[e.code] = true; });
+        window.addEventListener('keyup', function(e) { keys[e.code] = false; });
+
+        // LANCER LE JEU
+        function startGame() {
+            gameRunning = true;
+            score = 0;
+            gameSpeed = 5;
+            rocks = [];
+            surfer.y = 200;
+            uiLayer.style.display = 'none';
+            loop();
+        }
+
+        // BOUCLE PRINCIPALE (Tourne 60 fois par seconde)
+        function loop() {
+            if (!gameRunning) return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // On efface tout
+            
+            // 1. DESSINER L'OCÉAN (Lignes qui bougent)
+            ctx.fillStyle = "rgba(255, 255, 255, 0.2)";
+            for(let i=0; i<canvas.height; i+=40) {
+                ctx.fillRect((frameCount * gameSpeed) % canvas.width, i, 40, 2);
+            }
+
+            // 2. BOUGER LE SURFEUR
+            if (keys['ArrowUp'] && surfer.y > 0) surfer.y -= 7;
+            if (keys['ArrowDown'] && surfer.y < canvas.height - 50) surfer.y += 7;
+
+            // Dessiner le surfeur
+            ctx.font = "50px Arial";
+            ctx.fillText(surfer.emoji, surfer.x, surfer.y + 40);
+
+            // 3. GÉRER LES ROCHERS
+            if (frameCount % 60 === 0) { // Un rocher toutes les secondes environ
+                rocks.push({
+                    x: canvas.width,
+                    y: Math.random() * (canvas.height - 50),
+                    size: 40,
+                    emoji: "🪨"
+                });
+            }
+
+            // Faire avancer les rochers et détecter les collisions
+            rocks.forEach((rock, index) => {
+                rock.x -= gameSpeed;
+                
+                // Dessiner le rocher
+                ctx.fillText(rock.emoji, rock.x, rock.y + 40);
+
+                // COLLISION (Simple calcul de distance)
+                if (
+                    surfer.x < rock.x + rock.size - 10 &&
+                    surfer.x + surfer.size - 10 > rock.x &&
+                    surfer.y < rock.y + rock.size - 10 &&
+                    surfer.y + surfer.size - 10 > rock.y
+                ) {
+                    gameOver();
+                }
+
+                // Supprimer le rocher s'il est sorti de l'écran
+                if (rock.x < -50) {
+                    rocks.splice(index, 1);
+                    score++;
+                    scoreSpan.innerText = score;
+                    // Accélérer un peu le jeu tous les 5 points
+                    if(score % 5 === 0) gameSpeed += 0.5;
+                }
+            });
+
+            frameCount++;
+            requestAnimationFrame(loop);
+        }
+
+        function gameOver() {
+            gameRunning = false;
+            uiLayer.style.display = 'block';
+        }
+
+        // Démarrage initial
+        startGame();
+
+    </script>
+</body>
+</html>
