@@ -80,3 +80,109 @@ nav a.active {
     color: #666;
     margin-top: -10px;
 }
+/* --- COULEURS SPÉCIFIQUES PAR PAGE --- */
+
+/* Page Portfolio (Ambiance Nuit / Concert / RECO) */
+#page-portfolio {
+    background-color: #1a1a1a; /* Gris très sombre */
+    color: #f0f0f0; /* Texte clair */
+}
+#page-portfolio .card {
+    background: rgba(40, 40, 40, 0.9);
+    border-color: #7b2cbf; /* Violet style Feverclub */
+    color: #fff;
+}
+
+/* Page Expédition (Ambiance Carte / Nature) */
+#page-expedition {
+    background-color: #e0f7fa; /* Bleu très pâle (Ciel/Eau) */
+    color: #006064;
+}
+#page-expedition .card, #page-expedition h1 {
+    border-color: #00695c; /* Vert sapin */
+}
+
+/* Page Ingénierie (Ambiance Labo / Decathlon) */
+#page-ingenierie {
+    background-color: #ffffff; /* Blanc clinique/technique */
+    color: #333;
+    background-image: linear-gradient(#e6e6e6 1px, transparent 1px),
+    linear-gradient(90deg, #e6e6e6 1px, transparent 1px);
+    background-size: 20px 20px; /* Effet papier millimétré */
+}
+
+/* --- ANIMATIONS TEXTILES & DESSINS --- */
+
+/* 1. L'AVION ET LE GLOBE (Pour Expéditions) */
+.travel-animation {
+    position: relative;
+    height: 100px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border-bottom: 2px dashed #00695c;
+}
+
+.plane {
+    font-size: 40px;
+    position: absolute;
+    top: 20px;
+    animation: fly 8s linear infinite;
+}
+
+.globe {
+    font-size: 50px;
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    animation: spin 4s linear infinite;
+}
+
+@keyframes fly {
+    0% { left: -50px; transform: rotate(5deg); }
+    50% { left: 50%; top: 10px; transform: rotate(0deg); }
+    100% { left: 100%; top: 20px; transform: rotate(-5deg); }
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+/* 2. LA VAGUE ET LE SURF (Pour Decathlon) */
+.surf-container {
+    position: relative;
+    height: 80px;
+    background: #004B9A; /* Bleu Decath */
+    margin: 20px 0;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.wave {
+    position: absolute;
+    width: 200%;
+    height: 100%;
+    background: rgba(255,255,255,0.3);
+    border-radius: 40%;
+    top: -50%;
+    left: -50%;
+    animation: wave-motion 6s linear infinite;
+}
+
+.surfboard {
+    font-size: 40px;
+    position: absolute;
+    bottom: 10px;
+    left: 10%;
+    animation: surfing 3s ease-in-out infinite alternate;
+    z-index: 10;
+}
+
+@keyframes wave-motion {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes surfing {
+    0% { transform: translateY(0px) rotate(-10deg); }
+    100% { transform: translateY(-15px) rotate(10deg); }
+}
