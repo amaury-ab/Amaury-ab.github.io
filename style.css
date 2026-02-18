@@ -186,3 +186,47 @@ nav a.active {
     0% { transform: translateY(0px) rotate(-10deg); }
     100% { transform: translateY(-15px) rotate(10deg); }
 }
+/* --- IMAGES & GALERIE --- */
+
+/* Photo de profil ronde */
+.profile-container {
+    text-align: center;
+    margin-top: -30px; /* Pour remonter un peu sur le header */
+    margin-bottom: 20px;
+}
+
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%; /* Ça fait le rond */
+    border: 4px solid #fff;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Grille du Portfolio */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive auto */
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.photo-card {
+    background: #2a2a2a; /* Fond gris foncé carte */
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #7b2cbf; /* Bordure violette */
+}
+
+.photo-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.photo-card p {
+    color: #ccc;
+    font-size: 0.9em;
+    margin-top: 10px;
+}
