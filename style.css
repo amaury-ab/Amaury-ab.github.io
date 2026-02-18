@@ -84,13 +84,21 @@ nav a.active {
 
 /* Page Portfolio (Ambiance Nuit / Concert / RECO) */
 #page-portfolio {
-    background-color: #1a1a1a; /* Gris très sombre */
-    color: #f0f0f0; /* Texte clair */
+    background-color: #1a1a1a;
+    /* Création de la trame textile via des dégradés croisés */
+    background-image: 
+        repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 6px),
+        repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 6px);
+    background-attachment: fixed; /* L'effet reste fixe quand on scrolle */
+    color: #f0f0f0;
 }
-#page-portfolio .card {
-    background: rgba(40, 40, 40, 0.9);
-    border-color: #7b2cbf; /* Violet style Feverclub */
-    color: #fff;
+
+/* On ajoute une ombre pour faire "étiquette cousue" sur les cartes */
+#page-portfolio .card, #page-portfolio .photo-card {
+    background: #222;
+    border: 1px solid #333;
+    box-shadow: 5px 5px 0px #7b2cbf; /* Ombre violette dure style streetwear */
+    border-radius: 2px;
 }
 
 /* Page Expédition (Ambiance Carte / Nature) */
